@@ -92,11 +92,10 @@ object EventBus: CoroutineScope {
         
         val cloneContextList = mutableMapOf<String, MutableMap<Class<*>, EventData<*>>>()
         cloneContextList.putAll(contextMap)
-        for ((_, pipe) in cloneContextList) {
-            pipe.keys.firstOrNull { it == event.javaClass || it == event.javaClass.superclass }
-                .let { key ->
-                    pipe[key]?.send(event)
-                }
+        for ((_, eventDataMap) in cloneContextList) {
+            eventDataMap.keys
+                .firstOrNull { it == event.javaClass || it == event.javaClass.superclass }
+                .let { key -> eventDataMap[key]?.send(event) }
         }
     }
 }
