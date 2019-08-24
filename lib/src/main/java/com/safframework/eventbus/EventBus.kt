@@ -90,12 +90,12 @@ object EventBus: CoroutineScope {
 
     private fun send(event: Any) {
         
-        val cloneContextList = mutableMapOf<String, MutableMap<Class<*>, EventData<*>>>()
-        cloneContextList.putAll(contextMap)
-        for ((_, eventDataMap) in cloneContextList) {
+        val cloneContexMap = ConcurrentHashMap<String, MutableMap<Class<*>, EventData<*>>>()
+        cloneContexMap.putAll(contextMap)
+        for ((_, eventDataMap) in cloneContexMap) {
             eventDataMap.keys
                 .firstOrNull { it == event.javaClass || it == event.javaClass.superclass }
-                .let { key -> eventDataMap[key]?.send(event) }
+                ?.let { key -> eventDataMap[key]?.send(event) }
         }
     }
 }
