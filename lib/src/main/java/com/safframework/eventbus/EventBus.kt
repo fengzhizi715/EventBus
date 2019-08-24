@@ -13,6 +13,8 @@ import kotlin.coroutines.CoroutineContext
  * @date: 2019-08-24 23:28
  * @version: V1.0 <描述当前版本功能>
  */
+val UI: CoroutineDispatcher = Dispatchers.Main
+
 object EventBus: CoroutineScope {
 
     private val TAG = "EventBus"
@@ -26,7 +28,7 @@ object EventBus: CoroutineScope {
     @JvmStatic
     fun <T> registerEvent(
         contextName: String,
-        eventDispatcher: CoroutineDispatcher,
+        eventDispatcher: CoroutineDispatcher = UI,
         eventClass: Class<T>,
         eventCallback: (T) -> Unit
     ) {
