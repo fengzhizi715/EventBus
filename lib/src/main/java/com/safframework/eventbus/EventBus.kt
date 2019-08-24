@@ -20,25 +20,29 @@ object EventBus: CoroutineScope {
 
     override val coroutineContext: CoroutineContext = Dispatchers.Default + job
 
+    private val contextMap = mutableMapOf<String, MutableMap<Class<*>, EventData<*>>>()
+
+    @JvmStatic
     fun <T> registerEvent(
         contextName: String,
         eventDispatcher: CoroutineDispatcher,
         eventClass: Class<T>,
         eventCallback: (T) -> Unit
     ) {
-        val pipeList = if (contextList.containsKey(contextName)) {
-            contextList[contextName]!!
+        val pipeList = if (contextMap.containsKey(contextName)) {
+            contextMap[contextName]!!
         } else {
             val eventPipe = mutableMapOf<Class<*>, EventData<*>>()
-            contextList[contextName] = eventPipe
+            contextMap[contextName] = eventPipe
             eventPipe
         }
         val eventData = EventData(this, eventDispatcher, eventCallback)
         pipeList[eventClass] = eventData
     }
 
-
+    @JvmStatic
     fun send(event: Any, delaySend: Long = 0) {
+
         if (delaySend > 0) {
             launch {
                 delay(delaySend)
@@ -49,45 +53,41 @@ object EventBus: CoroutineScope {
         }
     }
 
+    @JvmStatic
     fun unregisterAllEvents() {
-        unregisterAllEvent()
+
+        Log.i(TAG,"unregisterAllEvents()")
+        coroutineContext.cancelChildren()
+        for ((_, pipe) in contextMap) {
+            pipe.values.forEach { it.cancel() }
+            pipe.clear()
+        }
+        contextMap.clear()
     }
 
+    @JvmStatic
     fun unregisterByContext(contextName: String) {
 
         Log.i(TAG,"unregisterByContext(context: $contextName)")
 
         val cloneContextList = mutableMapOf<String, MutableMap<Class<*>, EventData<*>>>()
-        cloneContextList.putAll(contextList)
+        cloneContextList.putAll(contextMap)
         val pipesInContext = cloneContextList.filter { it.key == contextName }
         for ((_, pipe) in pipesInContext) {
             pipe.values.forEach { it.cancel() }
             pipe.clear()
         }
-        contextList.remove(contextName)
+        contextMap.remove(contextName)
     }
-
-    private val contextList = mutableMapOf<String, MutableMap<Class<*>, EventData<*>>>()
 
     private fun send(event: Any) {
         val cloneContextList = mutableMapOf<String, MutableMap<Class<*>, EventData<*>>>()
-        cloneContextList.putAll(contextList)
+        cloneContextList.putAll(contextMap)
         for ((_, pipe) in cloneContextList) {
             pipe.keys.firstOrNull { it == event.javaClass || it == event.javaClass.superclass }
                 .let { key ->
                     pipe[key]?.send(event)
                 }
         }
-    }
-
-    private fun unregisterAllEvent() {
-
-        Log.i(TAG,"unregisterAllEvent()")
-        coroutineContext.cancelChildren()
-        for ((_, pipe) in contextList) {
-            pipe.values.forEach { it.cancel() }
-            pipe.clear()
-        }
-        contextList.clear()
     }
 }
