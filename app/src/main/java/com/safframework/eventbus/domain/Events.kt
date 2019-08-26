@@ -11,3 +11,5 @@ package com.safframework.eventbus.domain
 class Fragment1Event
 
 class Fragment2Event
+
+class CrossActivityEvent

@@ -3,8 +3,15 @@ package com.safframework.eventbus.activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
+import com.safframework.eventbus.EventBus
 import com.safframework.eventbus.R
+import com.safframework.eventbus.UI
+import com.safframework.eventbus.domain.CrossActivityEvent
+import com.safframework.eventbus.domain.Fragment1Event
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.text2
+import kotlinx.android.synthetic.main.fragment_2.*
 
 
 /**
@@ -28,5 +35,20 @@ class MainActivity: AppCompatActivity() {
             startActivity(i)
         }
 
+        text2.setOnClickListener {
+
+            val i = Intent(this@MainActivity, TestCrossActivity::class.java)
+            startActivity(i)
+        }
+
+        registerEvents()
+
+    }
+
+    private fun registerEvents() {
+
+        EventBus.registerEvent(this.javaClass.simpleName, UI, CrossActivityEvent::class.java) {
+            Toast.makeText(this@MainActivity, "来自MainActivity的Toast", Toast.LENGTH_SHORT).show()
+        }
     }
 }
