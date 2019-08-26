@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import com.safframework.eventbus.EventBus
 import com.safframework.eventbus.R
 import com.safframework.eventbus.app.BaseFragment
+import com.safframework.eventbus.domain.Fragment1Event
+import com.safframework.eventbus.domain.Fragment2Event
 
 /**
  *
@@ -20,6 +24,10 @@ class Fragment2 : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_2, container, false)
 
+        v.findViewById<Button>(R.id.button2).setOnClickListener {
+
+            EventBus.send(Fragment2Event())
+        }
 
         return v
     }

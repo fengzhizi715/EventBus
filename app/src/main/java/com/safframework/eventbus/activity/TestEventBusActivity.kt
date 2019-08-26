@@ -2,9 +2,15 @@ package com.safframework.eventbus.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.safframework.eventbus.EventBus
 import com.safframework.eventbus.R
+import com.safframework.eventbus.UI
+import com.safframework.eventbus.domain.Fragment1Event
+import com.safframework.eventbus.domain.Fragment2Event
 import com.safframework.eventbus.fragment.Fragment1
 import com.safframework.eventbus.fragment.Fragment2
+import kotlinx.android.synthetic.main.fragment_1.*
+import kotlinx.android.synthetic.main.fragment_2.*
 
 /**
  *
@@ -39,5 +45,13 @@ class TestEventBusActivity: AppCompatActivity() {
     }
 
     private fun registerEvents() {
+
+        EventBus.registerEvent(this.javaClass.simpleName, UI, Fragment1Event::class.java) {
+            fragment2.text2.text = "fragment2 已经接收到事件"
+        }
+
+        EventBus.registerEvent(this.javaClass.simpleName, UI, Fragment2Event::class.java) {
+            fragment1.text1.text = "fragment1 已经接收到事件"
+        }
     }
 }
