@@ -8,10 +8,9 @@ import com.safframework.eventbus.EventBus
 import com.safframework.eventbus.R
 import com.safframework.eventbus.UI
 import com.safframework.eventbus.domain.CrossActivityEvent
-import com.safframework.eventbus.domain.Fragment1Event
+import com.safframework.eventbus.domain.ExceptionEvent
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.text2
-import kotlinx.android.synthetic.main.fragment_2.*
 
 
 /**
@@ -41,6 +40,12 @@ class MainActivity: AppCompatActivity() {
             startActivity(i)
         }
 
+        text3.setOnClickListener {
+
+            val i = Intent(this@MainActivity, TestExceptionActivity::class.java)
+            startActivity(i)
+        }
+
         registerEvents()
 
     }
@@ -50,5 +55,12 @@ class MainActivity: AppCompatActivity() {
         EventBus.registerEvent(this.javaClass.simpleName, UI, CrossActivityEvent::class.java) {
             Toast.makeText(this@MainActivity, "来自MainActivity的Toast", Toast.LENGTH_SHORT).show()
         }
+
+        EventBus.registerEvent(this.javaClass.simpleName, UI, ExceptionEvent::class.java,{
+            val str: String? = null
+            println(str!!.substring(0))
+        },{
+            it.printStackTrace()
+        })
     }
 }

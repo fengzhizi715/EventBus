@@ -44,6 +44,25 @@ object EventBus: CoroutineScope {
     }
 
     @JvmStatic
+    fun <T> registerEvent(
+        contextName: String,
+        eventDispatcher: CoroutineDispatcher = UI,
+        eventClass: Class<T>,
+        eventCallback: (T) -> Unit,
+        eventFail:(Throwable)->Unit
+    ) {
+        val eventDataMap = if (contextMap.containsKey(contextName)) {
+            contextMap[contextName]!!
+        } else {
+            val eventDataMap = mutableMapOf<Class<*>, EventData<*>>()
+            contextMap[contextName] = eventDataMap
+            eventDataMap
+        }
+
+        eventDataMap[eventClass] = EventData(this, eventDispatcher, eventCallback, eventFail)
+    }
+
+    @JvmStatic
     fun post(event: Any, delayTime: Long = 0) {
 
         if (delayTime > 0) {

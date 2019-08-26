@@ -5,7 +5,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.launch
-import java.util.concurrent.TimeUnit
+import java.lang.Exception
 
 /**
  *
@@ -19,7 +19,8 @@ import java.util.concurrent.TimeUnit
 data class EventData<T>(
     val coroutineScope: CoroutineScope,
     val eventDispatcher: CoroutineDispatcher,
-    val onEvent: (T) -> Unit
+    val onEvent: (T) -> Unit,
+    val exception: ((Throwable)->Unit)? = null
 ) {
 
     private val channel = Channel<T>()
@@ -28,7 +29,19 @@ data class EventData<T>(
         coroutineScope.launch {
             channel.consumeEach {
                 launch(eventDispatcher) {
-                    onEvent(it)
+
+                    if (exception!=null) {
+
+                        try{
+                            onEvent(it)
+                        } catch (e:Exception) {
+
+                            exception.invoke(e)
+                        }
+                    } else {
+
+                        onEvent(it)
+                    }
                 }
             }
         }
@@ -36,7 +49,7 @@ data class EventData<T>(
 
     fun postEvent(event: Any) {
         if (!channel.isClosedForSend) {
-            TimeUnit.MILLISECONDS.sleep(1)
+
             coroutineScope.launch {
                 channel.send(event as T)
             }

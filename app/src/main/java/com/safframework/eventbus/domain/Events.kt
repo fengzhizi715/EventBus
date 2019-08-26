@@ -13,3 +13,5 @@ class Fragment1Event
 class Fragment2Event
 
 class CrossActivityEvent
+
+class ExceptionEvent
