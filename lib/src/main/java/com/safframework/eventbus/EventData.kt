@@ -34,7 +34,7 @@ data class EventData<T>(
         }
     }
 
-    fun send(event: Any) {
+    fun postEvent(event: Any) {
         if (!channel.isClosedForSend) {
             TimeUnit.MILLISECONDS.sleep(1)
             coroutineScope.launch {

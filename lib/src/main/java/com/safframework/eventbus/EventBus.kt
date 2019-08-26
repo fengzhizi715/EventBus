@@ -49,10 +49,10 @@ object EventBus: CoroutineScope {
         if (delayTime > 0) {
             launch {
                 delay(delayTime)
-                send(event)
+                postEvent(event)
             }
         } else {
-            send(event)
+            postEvent(event)
         }
     }
 
@@ -88,14 +88,14 @@ object EventBus: CoroutineScope {
         contextMap.remove(contextName)
     }
 
-    private fun send(event: Any) {
+    private fun postEvent(event: Any) {
         
         val cloneContexMap = ConcurrentHashMap<String, MutableMap<Class<*>, EventData<*>>>()
         cloneContexMap.putAll(contextMap)
         for ((_, eventDataMap) in cloneContexMap) {
             eventDataMap.keys
                 .firstOrNull { it == event.javaClass || it == event.javaClass.superclass }
-                ?.let { key -> eventDataMap[key]?.send(event) }
+                ?.let { key -> eventDataMap[key]?.postEvent(event) }
         }
     }
 }
