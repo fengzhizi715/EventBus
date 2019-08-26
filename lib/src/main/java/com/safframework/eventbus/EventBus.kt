@@ -44,7 +44,7 @@ object EventBus: CoroutineScope {
     }
 
     @JvmStatic
-    fun send(event: Any, delayTime: Long = 0) {
+    fun post(event: Any, delayTime: Long = 0) {
 
         if (delayTime > 0) {
             launch {

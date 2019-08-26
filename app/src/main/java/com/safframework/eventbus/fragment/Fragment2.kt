@@ -26,7 +26,7 @@ class Fragment2 : BaseFragment() {
 
         v.findViewById<Button>(R.id.button2).setOnClickListener {
 
-            EventBus.send(Fragment2Event())
+            EventBus.post(Fragment2Event())
         }
 
         return v

@@ -18,6 +18,6 @@ class TestCrossActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        EventBus.send(CrossActivityEvent())
+        EventBus.post(CrossActivityEvent())
     }
 }
