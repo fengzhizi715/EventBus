@@ -27,12 +27,13 @@ class TestStickyActivity : AppCompatActivity() {
 
     private fun initData() {
 
-        EventBus.postSticky(StickyEvent())
-        EventBus.post(NormalEvent())
+        EventBus.postSticky(StickyEvent()) // 发送Sticky Event
+        EventBus.post(NormalEvent())       // 发送普通的 Event
     }
 
     private fun registerEvents() {
 
+        // 注册 Sticky Event 
         EventBus.registerSticky(this.javaClass.simpleName, UI, StickyEvent::class.java) {
 
             Toast.makeText(this@TestStickyActivity, "this is StickyEvent", Toast.LENGTH_SHORT).show()
@@ -46,7 +47,7 @@ class TestStickyActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        EventBus.removeStickyEvent(StickyEvent::class.java)
-        EventBus.unregister(this.javaClass.simpleName)
+        EventBus.removeStickyEvent(StickyEvent::class.java) // 先 removeStickyEvent
+        EventBus.unregister(this.javaClass.simpleName)      // 再 unregister
     }
 }

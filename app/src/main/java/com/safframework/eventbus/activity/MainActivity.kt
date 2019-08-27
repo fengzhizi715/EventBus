@@ -64,9 +64,9 @@ class MainActivity: AppCompatActivity() {
 
         EventBus.register(this.javaClass.simpleName, UI, ExceptionEvent::class.java,{
             val str: String? = null
-            println(str!!.substring(0))
+            println(str!!.substring(0)) // 故意制造空指针异常
         },{
-            it.printStackTrace()
+            it.printStackTrace()  // 打印异常信息
         })
     }
 
