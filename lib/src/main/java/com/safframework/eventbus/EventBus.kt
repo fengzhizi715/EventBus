@@ -24,6 +24,7 @@ object EventBus: CoroutineScope {
     override val coroutineContext: CoroutineContext = Dispatchers.Default + job
 
     private val contextMap = ConcurrentHashMap<String, MutableMap<Class<*>, EventData<*>>>()
+    private val mStickyEventMap = ConcurrentHashMap<Class<*>, Any>()
 
     @JvmStatic
     fun <T> register(
@@ -63,6 +64,30 @@ object EventBus: CoroutineScope {
     }
 
     @JvmStatic
+    fun <T> registerSticky(
+        contextName: String,
+        eventDispatcher: CoroutineDispatcher = UI,
+        eventClass: Class<T>,
+        eventCallback: (T) -> Unit
+    ) {
+        val eventDataMap = if (contextMap.containsKey(contextName)) {
+            contextMap[contextName]!!
+        } else {
+            val eventDataMap = mutableMapOf<Class<*>, EventData<*>>()
+            contextMap[contextName] = eventDataMap
+            eventDataMap
+        }
+
+        eventDataMap[eventClass] = EventData(this, eventDispatcher, eventCallback)
+
+        val event = mStickyEventMap[eventClass]
+        event?.let {
+
+            postEvent(it)
+        }
+    }
+
+    @JvmStatic
     fun post(event: Any, delayTime: Long = 0) {
 
         if (delayTime > 0) {
@@ -73,6 +98,12 @@ object EventBus: CoroutineScope {
         } else {
             postEvent(event)
         }
+    }
+
+    @JvmStatic
+    fun postSticky(event: Any) {
+
+        mStickyEventMap[event.javaClass] = event
     }
 
     @JvmStatic
@@ -105,6 +136,11 @@ object EventBus: CoroutineScope {
             eventDataMap.clear()
         }
         contextMap.remove(contextName)
+    }
+
+    @JvmStatic
+    fun <T> removeStickyEvent(eventType: Class<T>) {
+        mStickyEventMap.remove(eventType)
     }
 
     private fun postEvent(event: Any) {

@@ -46,6 +46,12 @@ class MainActivity: AppCompatActivity() {
             startActivity(i)
         }
 
+        text4.setOnClickListener {
+
+            val i = Intent(this@MainActivity, TestStickyActivity::class.java)
+            startActivity(i)
+        }
+
         registerEvents()
 
     }

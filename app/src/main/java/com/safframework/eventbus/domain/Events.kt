@@ -15,3 +15,7 @@ class Fragment2Event
 class CrossActivityEvent
 
 class ExceptionEvent
+
+class StickyEvent
+
+class NormalEvent
