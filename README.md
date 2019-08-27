@@ -6,4 +6,4 @@
 * 支持事件注册、发布
 * 支持异常处理
 * 支持 Sticky 事件
-* 使用 Kotlin Coroutine
+* 基于 Kotlin Coroutine
