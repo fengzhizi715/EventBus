@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.safframework.eventbus.EventBus
-import com.safframework.eventbus.R
 import com.safframework.eventbus.UI
 import com.safframework.eventbus.domain.CrossActivityEvent
 import com.safframework.eventbus.domain.ExceptionEvent

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.safframework.eventbus">
+          package="com.safframework.eventbus.activity">
 
     <application android:allowBackup="true"
                  android:label="@string/app_name"
@@ -8,7 +8,7 @@
                  android:supportsRtl="true"
                  android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.MainActivity"
+        <activity android:name=".MainActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait">
             <intent-filter>
@@ -19,22 +19,22 @@
         </activity>
 
         <activity
-                android:name=".activity.TestEventBusActivity"
+                android:name=".TestEventBusActivity"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"/>
 
         <activity
-                android:name=".activity.TestCrossActivity"
+                android:name=".TestCrossActivity"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"/>
 
         <activity
-                android:name=".activity.TestExceptionActivity"
+                android:name=".TestExceptionActivity"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"/>
 
         <activity
-                android:name=".activity.TestStickyActivity"
+                android:name=".TestStickyActivity"
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="portrait"/>
     </application>

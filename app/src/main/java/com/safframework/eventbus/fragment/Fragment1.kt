@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import com.safframework.eventbus.EventBus
-import com.safframework.eventbus.R
+import com.safframework.eventbus.activity.R
 import com.safframework.eventbus.app.BaseFragment
 import com.safframework.eventbus.domain.Fragment1Event
-import kotlinx.android.synthetic.main.fragment_1.*
 
 /**
  *

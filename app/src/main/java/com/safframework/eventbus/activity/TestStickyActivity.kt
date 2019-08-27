@@ -33,7 +33,7 @@ class TestStickyActivity : AppCompatActivity() {
 
     private fun registerEvents() {
 
-        // 注册 Sticky Event 
+        // 注册 Sticky Event
         EventBus.registerSticky(this.javaClass.simpleName, UI, StickyEvent::class.java) {
 
             Toast.makeText(this@TestStickyActivity, "this is StickyEvent", Toast.LENGTH_SHORT).show()
