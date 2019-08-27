@@ -54,4 +54,10 @@ class TestEventBusActivity: AppCompatActivity() {
             fragment1.text1.text = "fragment1 已经接收到事件"
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        EventBus.unregister(this.javaClass.simpleName)
+    }
 }

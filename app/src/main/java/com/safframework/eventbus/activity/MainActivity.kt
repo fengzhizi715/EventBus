@@ -63,4 +63,10 @@ class MainActivity: AppCompatActivity() {
             it.printStackTrace()
         })
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        EventBus.unregister(this.javaClass.simpleName)
+    }
 }
