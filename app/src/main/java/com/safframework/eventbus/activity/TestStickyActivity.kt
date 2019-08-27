@@ -46,6 +46,7 @@ class TestStickyActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        EventBus.removeStickyEvent(StickyEvent::class.java)
         EventBus.unregister(this.javaClass.simpleName)
     }
 }
