@@ -27,7 +27,7 @@ data class EventData<T>(
 
     init {
         coroutineScope.launch {
-            channel.consumeEach {
+            channel.consumeEach { // 消费者循环地消费消息
                 launch(eventDispatcher) {
 
                     if (exception!=null) {
