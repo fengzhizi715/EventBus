@@ -46,11 +46,11 @@ class TestEventBusActivity: AppCompatActivity() {
 
     private fun registerEvents() {
 
-        EventBus.registerEvent(this.javaClass.simpleName, UI, Fragment1Event::class.java) {
+        EventBus.register(this.javaClass.simpleName, UI, Fragment1Event::class.java) {
             fragment2.text2.text = "fragment2 已经接收到事件"
         }
 
-        EventBus.registerEvent(this.javaClass.simpleName, UI, Fragment2Event::class.java) {
+        EventBus.register(this.javaClass.simpleName, UI, Fragment2Event::class.java) {
             fragment1.text1.text = "fragment1 已经接收到事件"
         }
     }

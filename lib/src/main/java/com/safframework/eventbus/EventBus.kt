@@ -26,7 +26,7 @@ object EventBus: CoroutineScope {
     private val contextMap = ConcurrentHashMap<String, MutableMap<Class<*>, EventData<*>>>()
 
     @JvmStatic
-    fun <T> registerEvent(
+    fun <T> register(
         contextName: String,
         eventDispatcher: CoroutineDispatcher = UI,
         eventClass: Class<T>,
@@ -44,7 +44,7 @@ object EventBus: CoroutineScope {
     }
 
     @JvmStatic
-    fun <T> registerEvent(
+    fun <T> register(
         contextName: String,
         eventDispatcher: CoroutineDispatcher = UI,
         eventClass: Class<T>,
@@ -91,7 +91,7 @@ object EventBus: CoroutineScope {
     }
 
     @JvmStatic
-    fun unregisterByContext(contextName: String) {
+    fun unregister(contextName: String) {
 
         Log.i(TAG,"$contextName")
 

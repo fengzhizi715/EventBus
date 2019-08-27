@@ -52,11 +52,11 @@ class MainActivity: AppCompatActivity() {
 
     private fun registerEvents() {
 
-        EventBus.registerEvent(this.javaClass.simpleName, UI, CrossActivityEvent::class.java) {
+        EventBus.register(this.javaClass.simpleName, UI, CrossActivityEvent::class.java) {
             Toast.makeText(this@MainActivity, "来自MainActivity的Toast", Toast.LENGTH_SHORT).show()
         }
 
-        EventBus.registerEvent(this.javaClass.simpleName, UI, ExceptionEvent::class.java,{
+        EventBus.register(this.javaClass.simpleName, UI, ExceptionEvent::class.java,{
             val str: String? = null
             println(str!!.substring(0))
         },{
