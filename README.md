@@ -18,6 +18,8 @@ Gradle:
 implementation 'com.safframework.eventbus:coroutine-eventbus:1.0.0'
 ```
 
+详见： https://www.jianshu.com/p/b2781ed82123
+
 # 联系方式:
 
 Wechat：fengzhizi715
