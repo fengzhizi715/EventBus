@@ -15,7 +15,7 @@
 
 Gradle:
 ```groovy
-implementation 'com.safframework.eventbus:coroutine-eventbus:1.0.0'
+implementation 'com.safframework.eventbus:coroutine-eventbus:1.1.0'
 ```
 
 详见： https://www.jianshu.com/p/b2781ed82123
