@@ -4,7 +4,7 @@ import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
 import android.os.Build
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 
 /**
  *
@@ -25,7 +25,7 @@ open class BaseFragment : Fragment() {
      * Deprecated on API 23
      * @param activity
      */
-    override fun onAttach(activity: Activity?) {
+    override fun onAttach(activity: Activity) {
         super.onAttach(activity)
         if (Build.VERSION.SDK_INT < 23) {
             this.mContext = activity
@@ -33,7 +33,7 @@ open class BaseFragment : Fragment() {
     }
 
     @TargetApi(23)
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
 
         if (context is Activity) {
